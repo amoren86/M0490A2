@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+// SYNCHRONIZATION ISSUE EXAMPLE: Race Condition
+// Counter is not protected against concurrent access
 class Counter {
 	private int count = 0;
 
