@@ -44,7 +44,7 @@ public class RaceConditionExample {
 		List<Thread> threads = new ArrayList<>();
 
 		for (int i = 0; i < THREADS; i++) {
-			CounterThread t = new CounterThread(counter);
+			Thread t = new CounterThread(counter);
 			threads.add(t);
 			t.start();
 		}
