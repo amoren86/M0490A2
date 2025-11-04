@@ -15,7 +15,7 @@ class JoinThread extends Thread {
 
 public class JoinExample {
 	public static void main(String[] args) throws InterruptedException {
-		JoinThread thread = new JoinThread();
+		Thread thread = new JoinThread();
 		thread.start();
 
 		System.out.println("Main thread waiting for thread to finish...");
