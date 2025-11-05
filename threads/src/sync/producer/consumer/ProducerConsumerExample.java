@@ -1,9 +1,7 @@
-package thread.sync.producer.consumer;
+package sync.producer.consumer;
 
 import java.util.LinkedList;
 import java.util.Queue;
-
-import ansi.colors.AnsiColor;
 
 // The item
 class Item {
@@ -11,7 +9,7 @@ class Item {
 
 	@Override
 	public String toString() {
-		return "Item@" + Integer.toHexString(hashCode());
+		return "📦@" + Integer.toHexString(hashCode());
 	}
 }
 
@@ -23,11 +21,11 @@ class Storage {
 	// Producer stores an item
 	public synchronized void store(Item item) throws InterruptedException {
 		while (items.size() == ProducerConsumerExample.STORAGE_CAPACITY) {
+			System.out.println("📥❌ Storage is full - 🏭💤 producer is waiting...");
 			wait(); // Wait if storage is full
-			System.out.println("Storage is full, producer is waiting...");
 		}
 
-		System.out.printf("Storage: item stored. Items in storage: %s%n", items);
+		System.out.printf("📥 Storage: item stored. Items in storage: %s%n", items);
 		notify(); // Notify consumer that there is at least one item
 
 		items.add(item);
@@ -36,11 +34,11 @@ class Storage {
 	// Consumer retrieves an item
 	public synchronized Item retrieve() throws InterruptedException {
 		while (items.isEmpty()) {
+			System.out.printf("📤❌ Storage is empty - ⚙️💤 consumer is waiting...%s%n", items);
 			wait(); // Wait if storage is empty
-			System.out.printf("Storage is empty, consumer is waiting...%s%n", items);
 		}
 
-		System.out.printf("Storage: item retrieve. Items in storage: %s%n", items, AnsiColor.RESET);
+		System.out.printf("📤 Storage: item retrieve. Items in storage: %s%n", items);
 		notify(); // Notify producer that there is space available
 
 		return items.remove();
@@ -81,7 +79,7 @@ class Producer extends Thread {
 	private Item produceItem() throws InterruptedException {
 		Thread.sleep(ProducerConsumerExample.PRODUCTION_TIME); // Simulate production time
 		Item item = new Item();
-		System.out.printf("Producer: items produced = %d. Produced item = %s%n", ++producedCounter, item);
+		System.out.printf("🏭 Producer: items produced = %d. Produced item = %s%n", ++producedCounter, item);
 		return item;
 	}
 }
@@ -110,7 +108,7 @@ class Consumer extends Thread {
 
 	private void consumeItem(Item item) throws InterruptedException {
 		Thread.sleep(ProducerConsumerExample.CONSUMPTION_TIME); // Simulate consumption time
-		System.out.printf("Consumer: items consumed = %d. Consumed item = %s%n", ++consumedCounter, item);
+		System.out.printf("⚙️ Consumer: items consumed = %d. Consumed item = %s%n", ++consumedCounter, item);
 	}
 }
 

@@ -1,4 +1,4 @@
-package thread.sync;
+package sync.race.conditions;
 
 import java.util.ArrayList;
 import java.util.List;

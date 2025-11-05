@@ -1,4 +1,4 @@
-package thread.sync.wait.notify;
+package sync.wait.notify;
 
 // Monitor class
 class Message {

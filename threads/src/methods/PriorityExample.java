@@ -1,4 +1,4 @@
-package thread;
+package methods;
 
 class PriorityThread extends Thread {
     private final String name;

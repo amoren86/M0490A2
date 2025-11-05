@@ -1,4 +1,4 @@
-package thread.sync;
+package sync.race.conditions.error;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,13 @@ class CounterThread extends Thread {
 
 	@Override
 	public void run() {
-		for (int i = 0; i < RaceConditionExample.INC_X_THREAD; i++) {
+		for (int i = 0; i < RaceConditionErrorExample.INC_X_THREAD; i++) {
 			counter.increment();
 		}
 	}
 }
 
-public class RaceConditionExample {
+public class RaceConditionErrorExample {
 	public static final int INC_X_THREAD = 2000;
 	public static final int THREADS = 10;
 

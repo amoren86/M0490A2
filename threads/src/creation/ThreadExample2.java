@@ -1,4 +1,4 @@
-package thread;
+package creation;
 
 //Example 2: Creating a thread by implementing Runnable
 class MyRunnable implements Runnable {
