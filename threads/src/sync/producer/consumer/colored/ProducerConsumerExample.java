@@ -1,4 +1,4 @@
-package thread.sync.producer.consumer.colored;
+package sync.producer.consumer.colored;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -23,8 +23,8 @@ class Storage {
 	// Producer stores an item
 	public synchronized void store(Item item) throws InterruptedException {
 		while (items.size() == ProducerConsumerExample.STORAGE_CAPACITY) {
-			wait(); // Wait if storage is full
 			System.out.printf("%sStorage is full, producer is waiting...%n%s", AnsiColor.RED, AnsiColor.RESET);
+			wait(); // Wait if storage is full
 		}
 
 		System.out.printf("Storage: item stored. Items in storage: %s%n", AnsiColor.BLACK, items, AnsiColor.RESET);
@@ -36,9 +36,9 @@ class Storage {
 	// Consumer retrieves an item
 	public synchronized Item retrieve() throws InterruptedException {
 		while (items.isEmpty()) {
-			wait(); // Wait if storage is empty
 			System.out.printf("%sStorage is empty, consumer is waiting...%s%n%s", AnsiColor.RED, AnsiColor.RESET,
 					items);
+			wait(); // Wait if storage is empty
 		}
 
 		System.out.printf("%sStorage: item retrieve. Items in storage: %s%n%s", AnsiColor.BLACK, items,

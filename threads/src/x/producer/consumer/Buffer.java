@@ -1,4 +1,4 @@
-package producer.consumer;
+package x.producer.consumer;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package thread;
+package creation;
 
 //Example 1: Creating a thread by extending Thread
 class MyThread extends Thread {

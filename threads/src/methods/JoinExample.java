@@ -1,4 +1,4 @@
-package thread;
+package methods;
 
 class JoinThread extends Thread {
 	@Override

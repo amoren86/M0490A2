@@ -1,8 +1,8 @@
-package thread.sync;
+package sync.deadlock;
 
 class BankAccount {
-	private String iban;
-	private double balance;
+	private String iban; // International Bank Account Number (identifier)
+	private double balance; // Account balance
 
 	public BankAccount(String iban, double balance) {
 		this.iban = iban;
@@ -13,54 +13,50 @@ class BankAccount {
 		return iban;
 	}
 
-	public synchronized void deposit(double amount) {
+	// Deposit and withdraw methods
+	public void deposit(double amount) {
 		balance += amount;
 	}
 
-	public synchronized void withdraw(double amount) {
+	public void withdraw(double amount) {
 		balance -= amount;
 	}
 
-	public synchronized double getBalance() {
+	// Get balance method
+	public double getBalance() {
 		return balance;
 	}
 
-	// Transfer method with potential deadlock
+	// Transfer method with deadlock avoidance
 	public void transfer(BankAccount destination, double amount) {
-		BankAccount firstLock;
-		BankAccount secondLock;
+		BankAccount firstLock; // Smaller IBAN
+		BankAccount secondLock; // Larger IBAN
 
 		// Determine lock order based on IBAN
 		int comparison = this.getIban().compareTo(destination.getIban());
 
 		if (comparison < 0) {
-			firstLock = this;
-			secondLock = destination;
+			// this.iban < destination.iban (thread 1)
+			firstLock = this; // this has smaller IBAN (thread 1: acc1)
+			secondLock = destination; // destination has larger IBAN (thread 1: acc2)
 		} else if (comparison > 0) {
-			firstLock = destination;
-			secondLock = this;
+			// this.iban > destination.iban (thread 2)
+			firstLock = destination; // destination has smaller IBAN (thread 2: acc1)
+			secondLock = this; // this has larger IBAN (thread 2: acc2)
 		} else {
 			return; // same account, no transfer needed
 		}
 
+		// Acquire locks in consistent order to avoid deadlock
+		// Thread 1 and Thread 2 will always lock the accounts in the same order
+		// firstLock is always the account with the smaller IBAN (acc1 in both cases)
 		synchronized (firstLock) {
 			System.out.println(Thread.currentThread().getName() + " locked " + firstLock.iban);
 
+			// No deadlock here since both threads lock accounts in the same order
+			// secondLock is always the account with the larger IBAN (acc2 in both cases)
 			synchronized (secondLock) {
 				System.out.println(Thread.currentThread().getName() + " locked " + secondLock.iban);
-
-				this.withdraw(amount);
-				destination.deposit(amount);
-
-				System.out.printf("%s transferred %.2f€ from %s to %s%n", Thread.currentThread().getName(), amount,
-						this.iban, destination.iban);
-			}
-		}
-		synchronized (this) {
-			System.out.println(Thread.currentThread().getName() + " locked " + this.iban);
-
-			synchronized (destination) {
-				System.out.println(Thread.currentThread().getName() + " locked " + destination.iban);
 
 				this.withdraw(amount);
 				destination.deposit(amount);

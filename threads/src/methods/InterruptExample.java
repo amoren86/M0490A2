@@ -1,4 +1,4 @@
-package thread;
+package methods;
 
 class InterruptibleThread extends Thread {
     @Override
@@ -18,7 +18,7 @@ class InterruptibleThread extends Thread {
 
 public class InterruptExample {
     public static void main(String[] args) throws InterruptedException {
-        InterruptibleThread thread = new InterruptibleThread();
+        Thread thread = new InterruptibleThread();
         thread.start();
 
         Thread.sleep(2000); // Let it run for 2 seconds
