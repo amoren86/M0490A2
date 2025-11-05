@@ -1,6 +1,6 @@
 package sync.readers.writers;
 
-public class BankAccount {
+class BankAccount {
 	private String iban; // International Bank Account Number (identifier)
 	private double balance; // Account balance
 	private int readers = 0; // number of active readers
